@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./bin/www.js"
+    "start": "nodemon ./bin/www.js"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +15,10 @@
     "cheerio": "^1.0.0-rc.10",
     "cors": "^2.8.5",
     "express": "^4.17.3",
-    "request-promise": "^4.2.6"
+    "express-async-handler": "^1.2.0",
+    "request-promise": "^4.2.6",
+    "selenium": "^2.20.0",
+    "selenium-webdriver": "^4.1.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
