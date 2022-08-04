@@ -1,35 +1,35 @@
 #!/usr/bin/env node
 
- const app = require("../index.js");
- const http = require("http");
- 
- const port = normalizePort(process.env.PORT || "5000");
- app.set("port", port);
+const app = require("../index.js");
+const http = require("http");
 
- const server = http.createServer(app);
+const port = normalizePort(process.env.PORT || "8000");
+app.set("port", port);
 
- server.listen(port);
- server.on("listening", onListening);
+const server = http.createServer(app);
 
- function normalizePort(val) {
-   const port = parseInt(val, 10);
- 
-   if (isNaN(port)) {
-     // named pipe
-     return val;
-   }
- 
-   if (port >= 0) {
-     // port number
-     return port;
-   }
- 
-   return false;
- }
- 
- 
- function onListening() {
-   const addr = server.address();
-   const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
-   console.log("Listening on " + bind);
- }
+server.listen(port);
+server.on("listening", onListening);
+
+function normalizePort(val) {
+  const port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+
+function onListening() {
+  const addr = server.address();
+  const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+  console.log("Listening on " + bind);
+}

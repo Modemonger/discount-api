@@ -5,6 +5,6 @@ const {
 } = require("../controllers/maximaController");
 
 /* GET listings. */
-router.get("/get", getMaximaDiscounts);
+router.get("/maxima", getMaximaDiscounts);
 
 module.exports = router;
