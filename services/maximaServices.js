@@ -6,21 +6,38 @@ const maximaDiscounts = (response) => {
     if(response.status==200) {
         const cheer = cheerio.load(html);
 
-        const datarow = cheer(".swiper-slide");
-        const output = datarow.find("h4").toArray();
-        let index = 0;
-        output.forEach(element => {
-            if(element.children[0].data){
-                const title = element.children[0].data.replace(/(\r\n|\n|\r)/gm, '').trim();
-                const price = datarow.find(".price-eur").eq(index).text() + "," + datarow.find(".price-cents").eq(index).text();
-                const img = datarow.find(".offer-image").find("img").eq(index).attr('data-src');
-                ++index;
+        const datarow = cheer(".offer-card");
+
+        datarow.toArray().forEach(element => {
+            
+            const tmp = cheerio.load(element);
+
+            const title = tmp(".offer-card").find("h4").text().replace(/(\r\n|\n|\r)/gm, '').trim();
+            let price = tmp(".offer-card").find(".price-wrapper").text().replace(/\s{2,}|(\r\n|\n|\r)/gm, ' ').trim();
+            const image = tmp(".offer-card").find("img").attr("data-src");
+            let discount = tmp(".offer-card").find(".discount-icon").text();
+            const card = tmp(".offer-card").find(".offer-bottom-icon-wrapper").find("img").attr("src") ? true : false;
+            price = price.replace(/[€]/g, '$& ').replace(/\s/, ',').trim(); 
+            discount = discount.replace(/(\r\n|\n|\r)/gm, '').trim();
+
+            if(discount.length > 3){
                 discounts.push({
                     title: title,
                     price: price,
-                    img: img,
-                })
+                    img: image,
+                    discount: discount,
+                    cardNeeded: card,
+                });
             }
+            else {
+                discounts.push({
+                    title: title,
+                    price: price,
+                    img: image,
+                    cardNeeded: card,
+                });
+            }
+
         });
     }
     return discounts;
